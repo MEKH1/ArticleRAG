@@ -1,0 +1,26 @@
+# Secrets
+.env
+backend/.env
+
+# Python environments
+.ArticleRAG/
+.venv/
+venv/
+
+# Python
+__pycache__/
+*.pyc
+
+# React
+node_modules/
+frontend/node_modules/
+frontend/dist/
+
+# RAG data
+backend/data/
+
+# macOS
+.DS_Store
+
+# VS Code
+.vscode/
