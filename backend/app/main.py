@@ -45,10 +45,7 @@ app.add_middleware(
     allow_headers=["*"]
 )
 
-
-vector_store = VectorStore(
-    dimension=384
-)
+vector_store = VectorStore(dimension=768)
 
 
 class SearchRequest(BaseModel):

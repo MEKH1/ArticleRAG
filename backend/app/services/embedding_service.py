@@ -1,16 +1,32 @@
-from sentence_transformers import SentenceTransformer
+import os
 
+from dotenv import load_dotenv
+from google import genai
+from google.genai import types
 
-model = SentenceTransformer("all-MiniLM-L6-v2")
+load_dotenv()
+
+client = genai.Client(
+    api_key=os.getenv("GEMINI_API_KEY")
+)
+
+EMBEDDING_MODEL = "gemini-embedding-001"
+EMBEDDING_DIMENSION = 768
 
 
 def embed_texts(texts: list[str]) -> list[list[float]]:
-    embeddings = model.encode(
-        texts,
-        normalize_embeddings=True
+    result = client.models.embed_content(
+        model=EMBEDDING_MODEL,
+        contents=texts,
+        config=types.EmbedContentConfig(
+            output_dimensionality=EMBEDDING_DIMENSION
+        )
     )
 
-    return embeddings.tolist()
+    return [
+        embedding.values
+        for embedding in result.embeddings
+    ]
 
 
 def embed_chunks(chunks: list[dict]) -> list[list[float]]:
@@ -23,9 +39,12 @@ def embed_chunks(chunks: list[dict]) -> list[list[float]]:
 
 
 def embed_question(question: str) -> list[float]:
-    embedding = model.encode(
-        question,
-        normalize_embeddings=True
+    result = client.models.embed_content(
+        model=EMBEDDING_MODEL,
+        contents=question,
+        config=types.EmbedContentConfig(
+            output_dimensionality=EMBEDDING_DIMENSION
+        )
     )
 
-    return embedding.tolist()
+    return result.embeddings[0].values
