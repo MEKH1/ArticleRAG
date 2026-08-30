@@ -38,7 +38,8 @@ app.add_middleware(
     CORSMiddleware,
     allow_origins=[
         "http://localhost:5173",
-        "https://article-rag.netlify.app"
+        "https://chimerical-dango-2bfbf7.netlify.app",
+
     ],
     allow_credentials=True,
     allow_methods=["*"],
